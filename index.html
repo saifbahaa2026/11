@@ -35,6 +35,7 @@
 </head>
 <body>
   <!--
+  
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
     or to give the user feedback during the initialization process.
@@ -45,3 +46,26 @@
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
+<script>
+  window.addEventListener('load', function() {
+    var checkExist = setInterval(function() {
+       if (document.querySelector('body')) {
+          clearInterval(checkExist);
+          var img = document.createElement('img');
+          img.src = 'my_photo.jpg'; // 👈 هنا كتبنا اسم صورتك الحقيقي بالضبط
+          img.style.position = 'absolute';
+          img.style.top = '140px'; 
+          img.style.left = '50%';
+          img.style.transform = 'translateX(-50%)';
+          img.style.width = '174px';
+          img.style.height = '174px';
+          img.style.borderRadius = '50%';
+          img.style.zIndex = '999';
+          img.style.pointerEvents = 'none';
+          img.style.border = '3px solid #FF3333';
+          img.style.boxShadow = '0 0 25px rgba(255,51,51,0.4)';
+          document.body.appendChild(img);
+       }
+    }, 100);
+  });
+</script>

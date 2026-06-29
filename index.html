@@ -1,41 +1,200 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <base href="/">
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Saif Portfolio">
-  <title>Saif Portfolio</title>
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body style="background-color: #1a0505; margin: 0; padding: 0; overflow-x: hidden;">
+// واجهة تفاصيل السيرة الذاتية (CV) باللغة العربية
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2D0A0A).withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: const Color(0xFFFF3333).withOpacity(0.2),
+                            width: 1,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text(
+                              "(CV) السيرة الذاتية",
+                              style: TextStyle(
+                                color: Color(0xFFFF4D4D),
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            const SizedBox(height: 20),
+                            _cvRow("المعلومات الشخصية:", "سيف بهاء | مواليد 2001 | الإقامة: العراق، محافظة ديالى"),
+                            _cvRow("التعليم الأكاديمي:", "طالب في مرحلة البكالوريوس - هندسة تقنيات الحاسوب"),
+                            _cvRow("المشاريع البرمجية:", "تطوير وبناء واجهة موقع البورتفوليو الشخصي الشامل والمتجاوب لعرض الحلول والخدمات البرمجية باستخدام بيئة Flutter Web و Python"),
+                            _cvRow("المهارات التقنية:", "Dart / Flutter Web, Python, SQL :واجهات المستخدم المتجاوبة (UI/UX)"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-  <script>
-    window.addEventListener('load', function() {
-      var checkExist = setInterval(function() {
-         if (document.querySelector('body')) {
-            clearInterval(checkExist);
-            var img = document.createElement('img');
-            img.src = 'my_photo.jpg'; // اسم صورتك الحالي بالضبط
-            img.style.position = 'absolute';
-            img.style.top = '143px'; 
-            img.style.left = '50%';
-            img.style.transform = 'translateX(-50%)';
-            img.style.width = '174px';
-            img.style.height = '174px';
-            img.style.borderRadius = '50%';
-            img.style.zIndex = '9999';
-            img.style.pointerEvents = 'none';
-            img.style.border = '3px solid #FF3333';
-            img.style.boxShadow = '0 0 25px rgba(255,51,51,0.5)';
-            document.body.appendChild(img);
-         }
-      }, 200);
-    });
-  </script>
+  Widget _socialIcon(IconData icon, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(30),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: const Color(0xFF2D0A0A).withOpacity(0.5),
+          border: Border.all(color: const Color(0xFFFF3333).withOpacity(0.6), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF3333).withOpacity(0.1),
+              blurRadius: 8,
+            )
+          ],
+        ),
+        child: Icon(icon, color: const Color(0xFFFF4D4D), size: 22),
+      ),
+    );
+  }
 
-  <script src="flutter.js" defer></script>
-  <script src="main.dart.js" defer></script>
-</body>
-</html>
+  Widget _cvRow(String title, String description) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              color: Color(0xFFFF4D4D),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            textDirection: TextDirection.rtl,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            description,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              height: 1.5,
+            ),
+            textDirection: TextDirection.rtl,
+          ),
+        ],
+      ),
+    );
+  }
+}
+// كلاس الأنيميشن التفاعلي للحلفية النيون المتحركة (Red Plexus Effect)
+class FullScreenRedPlexus extends StatefulWidget {
+  const FullScreenRedPlexus({Key? key}) : super(key: key);
+
+  @override
+  State<FullScreenRedPlexus> createState() => _FullScreenRedPlexusState();
+}
+
+class _FullScreenRedPlexusState extends State<FullScreenRedPlexus> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  final List<Map<String, dynamic>> _particles = [];
+  final Random _random = Random();
+  final int _particleCount = 45;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
+
+    for (int i = 0; i < _particleCount; i++) {
+      _particles.add({
+        'relX': _random.nextDouble(),
+        'relY': _random.nextDouble(),
+        'speed': 0.3 + _random.nextDouble() * 0.7,
+        'angle': _random.nextDouble() * pi * 2,
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: RedPlexusPainter(_particles, _controller.value),
+        );
+      },
+    );
+  }
+}
+
+class RedPlexusPainter extends CustomPainter {
+  final List<Map<String, dynamic>> particles;
+  final double animationValue;
+
+  RedPlexusPainter(this.particles, this.animationValue);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final linePaint = Paint()
+      ..color = const Color(0xFFFF3333).withOpacity(0.2)
+      ..strokeWidth = 1.0
+      ..style = PaintingStyle.stroke;
+
+    final dotPaint = Paint()
+      ..color = const Color(0xFFFF4D4D).withOpacity(0.7)
+      ..style = PaintingStyle.fill;
+
+    List<Offset> actualPositions = [];
+
+    for (var p in particles) {
+      double timeFactor = animationValue * pi * 2 * p['speed'];
+      double dx = sin(timeFactor + p['angle']) * 15;
+      double dy = cos(timeFactor + p['angle']) * 15;
+
+      double x = (p['relX'] * size.width) + dx;
+      double y = (p['relY'] * size.height) + dy;
+
+      x = x.clamp(0.0, size.width);
+      y = y.clamp(0.0, size.height);
+
+      Offset pos = Offset(x, y);
+      actualPositions.add(pos);
+
+      canvas.drawCircle(pos, 3, dotPaint);
+    }
+
+    for (int i = 0; i < actualPositions.length; i++) {
+      for (int j = i + 1; j < actualPositions.length; j++) {
+        double distance = (actualPositions[i] - actualPositions[j]).distance;
+        double maxDistance = 160.0;
+
+        if (distance < maxDistance) {
+          double opacity = (1.0 - (distance / maxDistance)) * 0.25;
+          linePaint.color = const Color(0xFFFF3333).withOpacity(opacity);
+          canvas.drawLine(actualPositions[i], actualPositions[j], linePaint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant RedPlexusPainter oldDelegate) => true;
+}
